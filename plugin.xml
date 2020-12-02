@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="dualscreeninfo-plugin" version="1.0.0">
+
+    <name>DualScreenInfo</name>
+    <description>DualScreenInfo description</description>
+    <license>MIT</license>
+    <keywords>cordova,whitelist,policy</keywords>
+
+    <js-module src="www/dualscreeninfo.js" name="dualscreeninfo">
+        <clobbers target="dualscreeninfo" />
+    </js-module>
+
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="DualScreenInfo" >
+                <param name="android-package" value="DualScreenInfo"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/DualScreenInfo.java" target-dir="src/plugins/dualscreeninfo/" />
+    </platform>
+</plugin>

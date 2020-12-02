@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="dualscreeninfo-plugin" version="1.0.0">
+    id="co.conceptdev.screenhelper"
+    version="0.0.1">
 
-    <name>dualscreeninfo</name>
-    <description>DualScreenInfo description</description>
+    <name>ScreenHelperPlugin</name>
+    <description>ScreenHelper for Surface Duo</description>
+    <license>MIT License</license>
 
-    <js-module src="www/dualscreeninfo.js" name="dualscreeninfo">
-        <clobbers target="dualscreeninfo" />
+    <engines>
+        <engine name="cordova" version=">=3.5.0" />
+    </engines>
+
+    <js-module src="www/screen_helper.js" name="screenhelper">
+        <clobbers target="ScreenHelper" />
     </js-module>
 
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="DualScreenInfo" >
-                <param name="android-package" value="DualScreenInfo"/>
+            <feature name="ScreenHelperPlugin"> 
+                <param name="android-package" value="co.conceptdev.ScreenHelperPlugin"/>
             </feature>
         </config-file>
-
-        <source-file src="src/android/DualScreenInfo.java" target-dir="src/plugins/dualscreeninfo/" />
+        <source-file src="src/android/code/ScreenHelperPlugin.java" target-dir="src/code" />        
+        <lib-file src="src/android/libs/com.microsoft.device.display.displaymask.jar" arch="device" />
+        <lib-file src="src/android/libs/com.microsoft.device.display.displaymask.jar" arch="simulator" />
     </platform>
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="ScreenHelperPlugin">
+                <param name="ios-package" value="ScreenHelperPlugin"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/ScreenHelperPlugin.h" target-dir="src/ios" />
+        <source-file src="src/ios/ScreenHelperPlugin.m" target-dir="src/ios" />
+    </platform>
+
 </plugin>

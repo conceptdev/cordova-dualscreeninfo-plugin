@@ -1,0 +1,17 @@
+{
+    "cordova": {
+        "id": "dualscreeninfo-plugin",
+        "platforms": [
+            "android",
+            "ios"
+        ]
+    },
+    "deprecated": false,
+    "name": "dualscreeninfo",
+    "description": "DualScreenInfo plugin",
+    "version": "1.0.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/conceptdev/cordova-dualscreeninfo-plugin.git"
+    }
+}

@@ -2,10 +2,8 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         id="dualscreeninfo-plugin" version="1.0.0">
 
-    <name>DualScreenInfo</name>
+    <name>dualscreeninfo</name>
     <description>DualScreenInfo description</description>
-    <license>MIT</license>
-    <keywords>cordova,whitelist,policy</keywords>
 
     <js-module src="www/dualscreeninfo.js" name="dualscreeninfo">
         <clobbers target="dualscreeninfo" />

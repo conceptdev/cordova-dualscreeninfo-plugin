@@ -22,6 +22,7 @@ window.addEventListener('resize', onResize, true);
 function onDeviceReady() {
     // Cordova is now initialized. Have fun!
 
+    // returns true or false
     window.ScreenHelper.isDualScreenDevice(
         function(result) { document.getElementById('dualscreen').innerText = 'isSurfaceDuo: ' + result; },
         function(error)  { document.getElementById('dualscreen').innerText = 'isSurfaceDuo: error ' + error; }
@@ -29,6 +30,7 @@ function onDeviceReady() {
 }
 
 function onResize() {
+    // returns coordinates of hinge area (left, top, width, height) or 0,0,0,0 if the app is not spanned
     window.ScreenHelper.getHinge(
         function(result) { document.getElementById('hinge').innerText = 'hinge: ' + result; },
         function(error)  { document.getElementById('hinge').innerText = 'hinge: error ' + error; }

@@ -2,6 +2,10 @@
 
 ## How To Use
 
+```dotnetcli
+cordova plugin add https://github.com/conceptdev/cordova-dualscreeninfo-plugin/
+```
+
 Add placeholders in HTML:
 
 ```html

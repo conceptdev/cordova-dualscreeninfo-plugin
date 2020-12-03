@@ -23,13 +23,17 @@ public class ScreenHelperPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         Log.d(TAG, "execute action: " + action);
         
-        // Route the Action
+        // Route the action
         if (action.equals("isDualScreenDevice")) {
             callbackContext.success(""+isDeviceSurfaceDuo());
             return true;
         }
         if (action.equals("getHinge")) {
             callbackContext.success(getDisplayMask());
+            return true;
+        }
+        if (action.equals("getStatusBarHeight")) {
+            callbackContext.success(""+getStatusBarHeight());
             return true;
         }
 
@@ -40,6 +44,9 @@ public class ScreenHelperPlugin extends CordovaPlugin {
 
     static final String TAG = "ScreenHelperCordovaPlugin";
 
+    /**
+    * @return true if this is a Surface Duo device, false otherwise
+    */
     private boolean isDeviceSurfaceDuo(){
         String feature = "com.microsoft.device.display.displaymask";
         Activity activity = this.cordova.getActivity();
@@ -54,6 +61,10 @@ public class ScreenHelperPlugin extends CordovaPlugin {
         }
     }
 
+    /**
+    * @return co-ordinates of the display mask area in pixels (left, top, width, height, statusBarHeight)
+    *         or 0,0,0,0 if there is no display mask (ie. app is not spanned)
+    */
     private String getDisplayMask(){
         Activity activity = this.cordova.getActivity();
 
@@ -66,6 +77,23 @@ public class ScreenHelperPlugin extends CordovaPlugin {
             mask = masks.get(0);
         }
 
-        return String.format("%d,%d,%d,%d", mask.left, mask.top, mask.right - mask.left, mask.bottom - mask.top);
+        int statusBarHeight = getStatusBarHeight();
+
+        return String.format("%d,%d,%d,%d,%d", mask.left, mask.top, mask.right - mask.left, mask.bottom - mask.top, statusBarHeight);
+    }
+
+    /**
+    * @return height of the status bar above the Cordova viewport (60px by default)
+    *         warning: this is not the recommended way to determine insets
+    */
+    public int getStatusBarHeight() {
+        Activity activity = this.cordova.getActivity();
+
+        int result = 0;
+        int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = activity.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 }

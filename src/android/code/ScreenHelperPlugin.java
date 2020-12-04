@@ -68,6 +68,8 @@ public class ScreenHelperPlugin extends CordovaPlugin {
     *         or 0,0,0,0 if there is no display mask (ie. app is not spanned)
     */
     private String getDisplayMask(){
+        if (!isDeviceSurfaceDuo()) return "0,0,0,0,0";
+        
         Activity activity = this.cordova.getActivity();
 
         DisplayMask displayMask = DisplayMask.fromResourcesRect(activity);

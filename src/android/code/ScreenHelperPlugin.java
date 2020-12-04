@@ -15,6 +15,8 @@ import android.util.Log;
 import com.microsoft.device.display.DisplayMask;
 import android.graphics.Rect;
 import java.util.List;
+
+import android.util.DisplayMetrics;
 /**
  * This class provides helper functions for detecting the device state on a Microsoft Surface Duo
  */
@@ -62,7 +64,7 @@ public class ScreenHelperPlugin extends CordovaPlugin {
     }
 
     /**
-    * @return co-ordinates of the display mask area in pixels (left, top, width, height, statusBarHeight)
+    * @return co-ordinates of the display mask area in dp (left, top, width, height, statusBarHeight)
     *         or 0,0,0,0 if there is no display mask (ie. app is not spanned)
     */
     private String getDisplayMask(){
@@ -79,7 +81,14 @@ public class ScreenHelperPlugin extends CordovaPlugin {
 
         int statusBarHeight = getStatusBarHeight();
 
-        return String.format("%d,%d,%d,%d,%d", mask.left, mask.top, mask.right - mask.left, mask.bottom - mask.top, statusBarHeight);
+        float density = getDisplayMetricsDensity();
+        
+        return String.format("%d,%d,%d,%d,%d", 
+            Math.round(mask.left / density), 
+            Math.round(mask.top / density), 
+            Math.round((mask.right - mask.left) / density), 
+            Math.round((mask.bottom - mask.top) / density), 
+            Math.round(statusBarHeight / density));
     }
 
     /**
@@ -96,4 +105,14 @@ public class ScreenHelperPlugin extends CordovaPlugin {
         }
         return result;
     }
+
+    /** 
+     * @return screen pixel density (eg. 2.5 for Surface Duo) to convert px values to dp
+     */
+    public float getDisplayMetricsDensity() {
+        Activity activity = this.cordova.getActivity();
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        return activity.getResources().getDisplayMetrics().density;
+      }
 }

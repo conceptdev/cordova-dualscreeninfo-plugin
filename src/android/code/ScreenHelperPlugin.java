@@ -18,9 +18,17 @@ import java.util.List;
 
 import android.util.DisplayMetrics;
 /**
- * This class provides helper functions for detecting the device state on a Microsoft Surface Duo
+ * This class provides helper functions for detecting the device state on a Microsoft Surface Duo:
+ * - isDeviceSurfaceDuo: true or false
+ * - getDisplayMask: returns a Rect coordinates string plus statusbarheight
+ * - getStatusBarHeight: separately query statusbarheight
+ * 
+ * The getDisplayMask method requires displaymask.jar which only works on Surface Duo. 
  */
 public class ScreenHelperPlugin extends CordovaPlugin {
+    /**
+     * Called by Cordova
+     */
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         Log.d(TAG, "execute action: " + action);
@@ -55,10 +63,10 @@ public class ScreenHelperPlugin extends CordovaPlugin {
         PackageManager pm = activity.getPackageManager();
 
         if (pm.hasSystemFeature(feature)) {
-            Log.i(TAG, "System has feature: " + feature);
+            Log.i(TAG, "System has feature: " + feature + " | isDeviceSurfaceDuo==true");
             return true;
         } else {
-            Log.w(TAG, "System missing feature: " + feature);
+            Log.w(TAG, "System missing feature: " + feature + " | isDeviceSurfaceDuo==false");
             return false;
         }
     }
@@ -68,6 +76,7 @@ public class ScreenHelperPlugin extends CordovaPlugin {
     *         or 0,0,0,0 if there is no display mask (ie. app is not spanned)
     */
     private String getDisplayMask(){
+        // if device is NOT a Surface Duo, return no display mask
         if (!isDeviceSurfaceDuo()) return "0,0,0,0,0";
         
         Activity activity = this.cordova.getActivity();
@@ -111,7 +120,7 @@ public class ScreenHelperPlugin extends CordovaPlugin {
     /** 
      * @return screen pixel density (eg. 2.5 for Surface Duo) to convert px values to dp
      */
-    public float getDisplayMetricsDensity() {
+    private float getDisplayMetricsDensity() {
         Activity activity = this.cordova.getActivity();
 
         DisplayMetrics metrics = new DisplayMetrics();

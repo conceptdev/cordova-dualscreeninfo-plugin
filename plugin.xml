@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="co.conceptdev.screenhelper"
-    version="0.0.1">
+    version="0.0.2">
 
     <name>ScreenHelperPlugin</name>
-    <description>ScreenHelper for Surface Duo</description>
+    <description>ScreenHelper for Surface Duo, with functions to detect if the device is a Surface Duo and also the masked area behind the hinge if the app is spanned.</description>
     <license>MIT License</license>
 
     <engines>
